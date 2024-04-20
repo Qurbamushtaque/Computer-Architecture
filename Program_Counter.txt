@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+
+module Program_Counter
+(
+input clk,reset,
+input [63:0] PC_In,
+output reg [63:0] PC_Out
+);
+reg force_reset;
+initial
+PC_Out<=64'd0;
+always @ (posedge clk or posedge reset)
+begin
+if (reset|| force_reset) begin
+
+PC_Out=64'd0;
+force_reset<=0;
+end
+else
+PC_Out=PC_In;
+end
+always @(negedge reset) force_reset<=1;
+endmodule
